@@ -1,0 +1,52 @@
+Proje Kurulumu
+
+git clone https://github.com/fatihavci06/edureycase
+
+!!indirdikten sonra composer install komutu çalıştırımlı
+!!indirildikten sonra ana dizindeki .env.example dosyasının ad .env olarak güncellenmeli
+
+buradaki .envde database configrasyonu yapılmalı eğer mail configrasyonu gerektiren işlemler var ise yapılmalı
+
+
+php artisan key:generate
+
+
+Veritabanı işlemleri
+
+mysqlde veritabanı oluşturduktan sonra .env dosyası içerisinde database ismi girilir
+
+daha sonra 
+php artisan migrate
+php artisan db:seed 
+
+sırasıyla çalıştırılarak tablolar aktarılarak dummy datalar tabloolara kaydedilir
+
+yada isterseniz database dosyasını proje içine koydum oradan kurabilrsiniz.
+
+
+ROUTE DOSYASI
+routes/api.php içerisindedir
+
+örnek routelar
+
+postman
+READ
+GET http://127.0.0.1:8000/api/kitaplar/
+burada cache sistemi çalışır .cache sona eriş süresi test açısından 1 dakika olarak ayarlanmıştır
+
+DELETE İŞLEMİ 
+4 idli kitapı silme işlemi
+
+POST http://127.0.0.1:8000/api/kitaplar/4/delete   
+
+postmandan bu linke gittiğimizde işlem kuyruğa alınır ve aşağıdaki komut çalıştırıldığında işlem gerçekleşir
+php artisan queue:work
+
+
+UPDATE İŞLEMİ
+
+POST http://127.0.0.1:8000/api/kitaplar/5/update
+
+burada postmandan body->formdata içerisinde  kitap_adi ve yazar_id göndererek güncellenmesi sağlandı.
+bu işlem sonucu event çalışarak log tablosuna kayıt atar
+
